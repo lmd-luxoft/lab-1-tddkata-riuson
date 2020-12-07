@@ -77,6 +77,7 @@ namespace TDDKata
         [TestCase("a")]
         [TestCase("1 2 + a +")]
         [TestCase("1 2 + 3 a +")]
+        [TestCase("10 20 + 0 /")]
         public void ShouldThrowException(string data)
         {
             // Arrange
