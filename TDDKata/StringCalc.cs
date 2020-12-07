@@ -56,6 +56,11 @@ namespace TDDKata {
                     case "/": {
                         var operand2 = stack.Pop();
                         var operand1 = stack.Pop();
+
+                        if (operand2 == 0) {
+                            throw new StringCalcException("Division by zero!");
+                        }
+
                         var result = operand1 / operand2;
                         stack.Push(result);
                         break;
