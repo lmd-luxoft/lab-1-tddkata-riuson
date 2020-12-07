@@ -1,20 +1,85 @@
-﻿// NUnit 3 tests
-// See documentation : https://github.com/nunit/docs/wiki/NUnit-Documentation
-using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace TDDKata
 {
     [TestFixture]
     public class TestClass
     {
-        [Test]
-        public void SimpleTest()
+        [TestCase("1", ExpectedResult = 1)]
+        [TestCase("10", ExpectedResult = 10)]
+        public int ShouldReturnWith1Operand(string data)
         {
-            StringCalc calc = new StringCalc();
-            int value = calc.Sum("2,2");
-            Assert.That(value, Is.EqualTo(4), "Wrong actual value");
+            // Arrange
+            var calc = new StringCalc();
+
+            // Act
+            var actual = calc.Calculate(data);
+
+            // Assert
+            return actual;
+        }
+
+        [TestCase("2 2 +", ExpectedResult = 4)]
+        [TestCase("1 7 +", ExpectedResult = 8)]
+        [TestCase("3 4 -", ExpectedResult = -1)]
+        public int ShouldCalculateWith2Operands(string data)
+        {
+            // Arrange
+            var calc = new StringCalc();
+
+            // Act
+            var actual = calc.Calculate(data);
+
+            // Assert
+            return actual;
+        }
+
+        [TestCase("7 2 3 * -", ExpectedResult = 1)]
+        [TestCase("1 4 5 * +", ExpectedResult = 21)]
+        [TestCase("20 5 1 - /", ExpectedResult = 5)]
+        public int ShouldCalculateWith3Operands(string data)
+        {
+            // Arrange
+            var calc = new StringCalc();
+
+            // Act
+            var actual = calc.Calculate(data);
+
+            // Assert
+            return actual;
+        }
+
+        [TestCase("1 2 + 3 + 4 + 5 10 * 7 1 - + +", ExpectedResult = 66)]
+        [TestCase("3 1 2 * - 4 + 6 - 10 /", ExpectedResult = 21)]
+        [TestCase("4 1 2 * - 4 + 6 - 2 /", ExpectedResult = 18)]
+        public int ShouldCalculateWithMoreOperands(string data)
+        {
+            // Arrange
+            var calc = new StringCalc();
+
+            // Act
+            var actual = calc.Calculate(data);
+
+            // Assert
+            return actual;
+        }
+
+        [TestCase("1 2 3 * * *")]
+        [TestCase("1 2 3 + 4 5")]
+        [TestCase("+ -")]
+        [TestCase("1 + 2")]
+        [TestCase("+ 1 2")]
+        [TestCase("2 2 ++")]
+        [TestCase("2 2 2 ++")]
+        [TestCase("1 + - ")]
+        [TestCase("1 - ")]
+        public void ShouldThrowException(string data)
+        {
+            // Arrange
+            var calc = new StringCalc();
+
+            // Act & Assert
+            Assert.Throws<StringCalcException>(() => calc.Calculate(data));
         }
     }
 }
