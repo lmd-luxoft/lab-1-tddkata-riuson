@@ -6,7 +6,7 @@ namespace TDDKata
 {
     internal class StringCalc
     {
-        internal int Add(string v)
+        internal int Sum(string v)
         {
             throw new NotImplementedException();
         }
