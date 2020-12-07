@@ -50,8 +50,8 @@ namespace TDDKata
         }
 
         [TestCase("1 2 + 3 + 4 + 5 10 * 7 1 - + +", ExpectedResult = 66)]
-        [TestCase("3 1 2 * - 4 + 6 - 10 /", ExpectedResult = 21)]
-        [TestCase("4 1 2 * - 4 + 6 - 2 /", ExpectedResult = 18)]
+        [TestCase("30 1 2 * - 4 + 6 - 2 /", ExpectedResult = 13)]
+        [TestCase("4 1 2 * - 4 + 6 - 2 /", ExpectedResult = 0)]
         public int ShouldCalculateWithMoreOperands(string data)
         {
             // Arrange
@@ -73,6 +73,10 @@ namespace TDDKata
         [TestCase("2 2 2 ++")]
         [TestCase("1 + - ")]
         [TestCase("1 - ")]
+        [TestCase("a b -")]
+        [TestCase("a")]
+        [TestCase("1 2 + a +")]
+        [TestCase("1 2 + 3 a +")]
         public void ShouldThrowException(string data)
         {
             // Arrange
