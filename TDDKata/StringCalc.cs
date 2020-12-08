@@ -11,14 +11,9 @@ namespace TDDKata {
         }
 
         internal int Calculate(string expression) {
-            if (string.IsNullOrWhiteSpace(expression)) {
-                throw new StringCalcException("Expression is empty!");
-            }
-
-            var items = expression.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var stack = new Stack<int>();
 
-            foreach (var item in items) {
+            foreach (var item in this.EnumerateTokens(expression)) {
                 if (this._operations.TryGetValue(item, out var operation)) {
                     if (stack.Count >= operation.OperandsCount) {
                         operation.Process(stack);
@@ -39,6 +34,15 @@ namespace TDDKata {
             }
 
             return stack.Pop();
+        }
+
+        internal IEnumerable<string> EnumerateTokens(string expression) {
+            if (string.IsNullOrWhiteSpace(expression)) {
+                throw new StringCalcException("Expression is empty!");
+            }
+
+            var items = expression.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return items;
         }
     }
 
